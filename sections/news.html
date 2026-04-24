@@ -1,0 +1,13 @@
+<div id="sec-news" class="section">
+  <div class="page-hero"><h1>Yangiliklar</h1><div class="bc"><a href="#" onclick="nav('home')">Bosh sahifa</a> › Yangiliklar</div></div>
+  <div class="page-body">
+    <main>
+      <div class="card" style="margin-bottom:18px"><div class="card-body" style="display:flex;gap:10px">
+        <input type="text" id="news-q" placeholder="Yangiliklar qidirish..." style="flex:1;padding:9px 14px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;font-family:inherit;outline:none" oninput="filterNews()"/>
+      </div></div>
+      <div id="news-list"><div class="loading"><div class="spinner"></div>Yuklanmoqda...</div></div>
+      <div id="news-pag" class="pag"></div>
+    </main>
+    <aside class="sidebar" id="news-sidebar"></aside>
+  </div>
+</div>

@@ -1,0 +1,37 @@
+<div id="sec-admin" class="section">
+  <div class="page-hero"><h1>⚙ Admin Panel</h1><div class="bc"><a href="#" onclick="nav('home')">Bosh sahifa</a> › Admin panel</div></div>
+  <div class="page-full" style="padding-top:26px;padding-bottom:36px">
+
+    <!-- Not logged in state -->
+    <div id="admin-login-required" style="display:none;text-align:center;padding:60px 20px">
+      <div style="font-size:64px;margin-bottom:20px">🔐</div>
+      <h2 style="font-family:'Playfair Display',serif;color:var(--green);margin-bottom:12px">Admin panelga kirish</h2>
+      <p style="color:var(--muted);margin-bottom:24px">Bu bo'lim faqat maktab ma'muriyati uchun. Kirish uchun tizimga kiring.</p>
+      <button class="btn btn-green" onclick="openLogin()">🔐 Tizimga kirish</button>
+    </div>
+
+    <!-- Logged in state -->
+    <div id="admin-panel-content" style="display:none">
+      <div style="background:#e8f5ed;border:1.5px solid var(--green);border-radius:12px;padding:16px 20px;margin-bottom:22px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px">
+        <div><b style="color:var(--green)">✅ Tizimga kirildi:</b> <span id="admin-user-email" style="color:var(--muted)"></span></div>
+        <button class="btn btn-sm" style="background:var(--danger);color:#fff;border:none" onclick="doLogout()">↩ Chiqish</button>
+      </div>
+
+      <div class="admin-stats" id="admin-stats">
+        <div class="astat"><div class="astat-n" id="stat-news">—</div><div class="astat-l">Yangiliklar</div></div>
+        <div class="astat"><div class="astat-n" id="stat-ann">—</div><div class="astat-l">E'lonlar</div></div>
+        <div class="astat"><div class="astat-n" id="stat-msg">—</div><div class="astat-l">Murojaatlar</div></div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px;margin-bottom:28px">
+        <div class="card" style="border-top:4px solid var(--green);cursor:pointer" onclick="adminTab('yangilik')"><div class="card-body" style="text-align:center"><div style="font-size:34px;margin-bottom:7px">📰</div><h4 style="color:var(--green)">Yangiliklar</h4><p style="font-size:12px;color:var(--muted)">Qo'shish, o'chirish</p></div></div>
+        <div class="card" style="border-top:4px solid var(--gold);cursor:pointer" onclick="adminTab('elon')"><div class="card-body" style="text-align:center"><div style="font-size:34px;margin-bottom:7px">📢</div><h4 style="color:var(--green)">E'lonlar</h4><p style="font-size:12px;color:var(--muted)">E'lon qo'shish</p></div></div>
+        <div class="card" style="border-top:4px solid #2471a3;cursor:pointer" onclick="adminTab('murojaatlar')"><div class="card-body" style="text-align:center"><div style="font-size:34px;margin-bottom:7px">📬</div><h4 style="color:var(--green)">Murojaatlar</h4><p style="font-size:12px;color:var(--muted)">Ko'rish va javob berish</p></div></div>
+      </div>
+
+      <div id="admin-content">
+        <div class="card"><div class="card-body" style="text-align:center;padding:36px;color:var(--muted)"><div style="font-size:44px;margin-bottom:10px">⚙️</div><p>Boshqarish uchun yuqoridagi bo'limlardan birini tanlang</p></div></div>
+      </div>
+    </div>
+  </div>
+</div>

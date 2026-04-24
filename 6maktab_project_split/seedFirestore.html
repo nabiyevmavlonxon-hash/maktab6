@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Firestorega ma'lumot yuklash</title>
+  <style>
+    body{font-family:Arial,sans-serif;background:#f4f8f5;padding:30px;color:#1a2a1e}
+    .box{max-width:760px;margin:auto;background:#fff;border-radius:14px;padding:24px;box-shadow:0 4px 20px rgba(0,0,0,.08)}
+    button{background:#1b6b3a;color:#fff;border:0;border-radius:8px;padding:12px 18px;font-weight:700;cursor:pointer}
+    pre{background:#111;color:#0f0;padding:15px;border-radius:10px;white-space:pre-wrap;min-height:180px}
+  </style>
+</head>
+<body>
+<div class="box">
+  <h1>Firestorega boshlang'ich ma'lumotlarni yuklash</h1>
+  <p>Bu faylni Live Server orqali oching va tugmani bosing. Ma'lumotlar Firebase Firestore bazasiga yoziladi.</p>
+  <button id="seedBtn">🔥 Firestorega yuklash</button>
+  <pre id="log">Kutilyapti...</pre>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getFirestore, collection, addDoc, doc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyANLJM2PZ_emDNzVTL_ZEnyppb70j5rH0Y",
+  authDomain: "furqat6maktab-29681.firebaseapp.com",
+  projectId: "furqat6maktab-29681",
+  storageBucket: "furqat6maktab-29681.firebasestorage.app",
+  messagingSenderId: "597415083181",
+  appId: "1:597415083181:web:db266199762e2935aa1a24",
+  measurementId: "G-TRJVHX4TVH"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const log = (m) => document.getElementById('log').textContent += '\n' + m;
+
+const siteSettings = {
+  schoolName: "6-son Umumta'lim Maktabi",
+  region: "Farg'ona viloyati Furqat tumani",
+  slogan: "Bilim — kelajak poydevorimiz",
+  phone: "+998 73 540-06-06",
+  email: "furqat6maktab@edu.uz",
+  address: "Farg'ona viloyati, Furqat tumani",
+  director: "Qodirov Baxtiyor Salimovich",
+  studentsCount: "1200+",
+  teachersCount: "72",
+  classroomsCount: "42"
+};
+
+const news = [
+  {date:"20.04.2026", time:"10:00", title:"Maktabimiz o'quvchilari viloyat olimpiadasida g'olib bo'ldi", excerpt:"Farg'ona viloyati matematika olimpiadasida maktabimiz o'quvchilari 3 ta oltin, 2 ta kumush medal qozondi.", img:"https://picsum.photos/seed/news1/400/260"},
+  {date:"15.04.2026", time:"09:00", title:"Navro'z bayrami maktabimizda ulug'vor o'tkazildi", excerpt:"Maktabimizda Navro'z bayrami tantanasi o'quvchilar, o'qituvchilar va ota-onalar ishtirokida nishonlandi.", img:"https://picsum.photos/seed/news2/400/260"},
+  {date:"10.04.2026", time:"11:00", title:"Yangi IT xona foydalanishga topshirildi", excerpt:"30 ta zamonaviy kompyuterdan iborat yangi IT xona rasman foydalanishga berildi.", img:"https://picsum.photos/seed/news3/400/260"}
+];
+
+const announcements = [
+  {date:"22.04.2026", title:"Ota-onalar majlisi o'tkaziladi", text:"25-aprel, soat 18:00 da ota-onalar umumiy majlisi bo'lib o'tadi.", badge:"Muhim"},
+  {date:"18.04.2026", title:"Olimpiada materiallari tayyorlash", text:"Viloyat matematika olimpiadasiga tayyorgarlik uchun qo'shimcha mashg'ulotlar boshlanadi.", badge:"Olimpiada"},
+  {date:"12.04.2026", title:"Kasb tanlash kuni", text:"Maktabimizda kasb tanlash kuni bo'lib o'tadi.", badge:"Tadbir"}
+];
+
+const staff = [
+  {name:"Nazarova Feruza", subject:"O'zbek tili va adabiyot", category:"Yuqori toifa", avatar:"👩‍🏫"},
+  {name:"Karimov Jasur", subject:"Fizika", category:"1-toifa", avatar:"👨‍🏫"},
+  {name:"Rahimova Dilnoza", subject:"Matematika", category:"Yuqori toifa", avatar:"👩‍🏫"},
+  {name:"Botirov Komiljon", subject:"Informatika", category:"1-toifa", avatar:"👨‍🏫"}
+];
+
+const gallery = [
+  {title:"Maktab binosi", img:"https://picsum.photos/seed/school1/800/600", category:"school"},
+  {title:"Sport zali", img:"https://picsum.photos/seed/school2/800/600", category:"school"},
+  {title:"Kutubxona", img:"https://picsum.photos/seed/school3/800/600", category:"school"}
+];
+
+const circles = [
+  {name:"Robototexnika", teacher:"Botirov Komiljon", schedule:"Dushanba, Chorshanba", count:"25", icon:"🤖"},
+  {name:"Matematika", teacher:"Rahimova Dilnoza", schedule:"Seshanba, Payshanba", count:"30", icon:"📐"},
+  {name:"Futbol", teacher:"Eshmatov Dostonbek", schedule:"Juma, Shanba", count:"35", icon:"⚽"}
+];
+
+async function addMany(collectionName, data){
+  for (const item of data) {
+    await addDoc(collection(db, collectionName), {...item, createdAt: serverTimestamp(), updatedAt: serverTimestamp()});
+    log('✅ ' + collectionName + ': ' + (item.title || item.name));
+  }
+}
+
+document.getElementById('seedBtn').onclick = async () => {
+  document.getElementById('log').textContent = 'Boshlanyapti...';
+  try {
+    await setDoc(doc(db, 'site', 'settings'), {...siteSettings, updatedAt: serverTimestamp()});
+    log('✅ site/settings yozildi');
+    await addMany('news', news);
+    await addMany('announcements', announcements);
+    await addMany('staff', staff);
+    await addMany('gallery', gallery);
+    await addMany('circles', circles);
+    log('\n🎉 Tayyor! Firestorega maʼlumotlar yuklandi.');
+  } catch (e) {
+    log('\n❌ Xatolik: ' + e.message);
+  }
+};
+</script>
+</body>
+</html>
